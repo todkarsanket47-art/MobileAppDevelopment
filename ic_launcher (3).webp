@@ -1,44 +1,37 @@
-package com.example.implicitintent;
+package com.example.listview;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
+public class MainActivity extends AppCompatActivity {
 
-import com.example.implicitintent.databinding.FragmentFirstBinding;
+    ListView listView;
 
-public class FirstFragment extends Fragment {
-
-    private FragmentFirstBinding binding;
+    String[] items = {
+            "Android",
+            "iPhone",
+            "Windows",
+            "Blackberry",
+            "Ubuntu",
+            "Mac OS"
+    };
 
     @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        binding = FragmentFirstBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+        listView = findViewById(R.id.listView);
 
-    }
-
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        binding.buttonFirst.setOnClickListener(v ->
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment)
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                R.layout.list_item,
+                R.id.textItem,
+                items
         );
-    }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+        listView.setAdapter(adapter);
     }
-
 }
